@@ -74,13 +74,15 @@ public class ColorPickerPreference
 	}
 
 	private void init(Context context, AttributeSet attrs) {
-		mDensity = getContext().getResources().getDisplayMetrics().density;
+		mDensity = context.getResources().getDisplayMetrics().density;
 		setOnPreferenceClickListener(this);
-		if (attrs != null) {
-			mAlphaSliderEnabled = attrs.getAttributeBooleanValue(null, "alphaSlider", false);
-			mHexValueEnabled = attrs.getAttributeBooleanValue(null, "hexValue", false);
-		}
-	}
+        if (attrs != null) {
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ColorPickerPreference);
+            mAlphaSliderEnabled = ta.getBoolean(R.styleable.ColorPickerPreference_alphaSlider, false);
+            mHexValueEnabled = ta.getBoolean(R.styleable.ColorPickerPreference_hexValue, false);
+            ta.recycle();
+        }
+    }
 
 	@Override
 	protected void onBindView(View view) {
